@@ -39,9 +39,8 @@ export default function CreatePost() {
     <form onSubmit={handleSubmit}>    
       <input className='title' placeholder='Write a title'name="title" value={formData.title || '' } onChange={handleChange} />
       <Textarea className='post' placeholder='Text here' name="text" value={formData.text || ''} onChange={handleChange} />
-      <button type="submit">POddST</button>
+      <button type="submit">POST</button>
     </form>
-    {posts.length === 0 ? "No Posts Yet" : <PostsList posts={posts} />}
 
     </body>
     
