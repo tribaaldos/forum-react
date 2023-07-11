@@ -120,7 +120,7 @@ input:focus {
 button, a.button {
   margin: 1vmin;
   padding: 1vmin;
-  color: var(--white);
+  color: black;
   background-color: var(--orange);
   font-size: 2vmin;
   font-weight: bold;
@@ -144,7 +144,7 @@ button.btn-xs {
 
 button:disabled, form:invalid button[type="submit"] {
   cursor: not-allowed;
-  background-color: var(--tan-4);
+  background-color: black;
 }
 
 button[type="submit"] {

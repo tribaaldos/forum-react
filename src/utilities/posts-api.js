@@ -6,5 +6,5 @@ export async function getPosts() {
 }
 
 export async function addPost (formData) {
-    return sendRequest(BASE_URL, 'POST', {text:formData})
+    return sendRequest(BASE_URL, 'POST', formData)
 }

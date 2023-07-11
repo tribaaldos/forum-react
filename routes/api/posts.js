@@ -3,8 +3,8 @@ const router = express.Router();
 const postsCtrl = require('../../controllers/api/posts');
 const ensureLoggedIn = require('../../config/ensureLoggedIn');
 
-router.get('/', postsCtrl.index);
+router.get('/', ensureLoggedIn, postsCtrl.index);
 
-router.post('/', postsCtrl.addPost);
+router.post('/', ensureLoggedIn, postsCtrl.addPost);
 
 module.exports = router;
