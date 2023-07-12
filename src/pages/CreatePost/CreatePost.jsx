@@ -38,7 +38,7 @@ export default function CreatePost({setPosts, posts, setShowCreatePost}) {
    
 
     </div>
-    <PostDetail formData={formData} />
+    {/* <PostDetail formData={formData} /> */}
     </>
   )
 }
