@@ -1,8 +1,9 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './PostItem.css'
 
 export default function PostItem({ post }) {
-  const [comment, setComment] = useState('');
+  // const [comment, setComment] = useState('');
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
@@ -11,12 +12,12 @@ export default function PostItem({ post }) {
   };
 
   return (
-    <div>
-      <h1>Title: {post.title}</h1>
+    <div className="post-item">
+      <h1>{post.title}</h1>
       <p>Text: {post.text}</p>
 
       <form onSubmit={handleCommentSubmit}>
-        <Link to={`/detailpage/${post.id}`}>
+        <Link to={`/post/${post._id}`}>
           <button type="submit">comment</button>
         </Link>
       </form>

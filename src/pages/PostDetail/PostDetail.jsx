@@ -1,7 +1,5 @@
-export default function PostDetail() {
-    return ( 
-        <div> 
-            <h1>hello!</h1>
-        </div>
+export default function PostDetail(post) {
+    return (
+        <h1>{post.title}</h1>
     )
 }

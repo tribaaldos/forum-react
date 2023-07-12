@@ -5,9 +5,9 @@ import NavBar from '../../components/NavBar/NavBar';
 export default function HomePage({user, setUser, setPosts, posts}) {
     const [showCreatePost, setShowCreatePost] = useState(false);
     
-    const handleClick = () => {
-      setShowCreatePost(true);
-    };
+    // const handleClick = () => {
+    //   setShowCreatePost(true);
+    // };
     
     return (
 

@@ -1,8 +1,8 @@
-import {Text, Textarea } from '@chakra-ui/react'
+import {Textarea } from '@chakra-ui/react'
 import './CreatePost.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as postsAPI from '../../utilities/posts-api';
-import PostsList from '../../pages/PostsList/PostsList';
+import PostDetail from '../../pages/PostDetail/PostDetail'
 
 export default function CreatePost({setPosts, posts, setShowCreatePost}) {
 
@@ -38,6 +38,7 @@ export default function CreatePost({setPosts, posts, setShowCreatePost}) {
    
 
     </div>
+    <PostDetail formData={formData} />
     </>
   )
 }
