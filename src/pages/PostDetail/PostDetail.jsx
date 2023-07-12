@@ -1,14 +1,22 @@
-
 import React from 'react';
-import PostItem from '../../components/PostItem/PostItem';
+import { useParams } from 'react-router-dom';
+import NavBar from '../../components/NavBar/NavBar'
 
-export default function PostsList({ posts, clickedPostId }) {
-  // Find the clicked post from the posts array
-  const clickedPost = posts.find((post) => post._id === clickedPostId);
+export default function PostDetail({ posts }) {
+
+  const { postId } = useParams();
+  const post = posts.find((p) => p._id === postId);
 
   return (
-    <div>
-      {clickedPost && <PostItem post={clickedPost} />}
-    </div>
+    <>
+        <NavBar />
+        <div>
+            <h1>Title: {post.title}</h1>
+            <p>Text: {post.text}</p>
+        </div>
+    </>
   );
-}
+};
+
+
+
