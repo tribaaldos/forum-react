@@ -8,15 +8,13 @@ import PostsList from '../../pages/PostsList/PostsList';
 import AuthPage from '../AuthPage/AuthPage';
 import CreatePost from '../../pages/CreatePost/CreatePost';
 import NavBar from '../../components/NavBar/NavBar';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage'
+import HomePage from '../../pages/HomePage/HomePage';
 
 export default function App() {
   const [user, setUser] = useState(getUser());
   const [posts, setPosts] = useState([]);
-  const [showCreatePost, setShowCreatePost] = useState(false);
 
-  const handleClick = () => {
-    setShowCreatePost(true);
-  };
 
   useEffect(() => {
     async function fetchPosts() {
@@ -33,27 +31,11 @@ export default function App() {
       <main className="App">
         {user ? (
           <>
-            <NavBar user={user} setUser={setUser} />
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    {!showCreatePost && (
-                      <input
-                      type="text"
-                      onClick={handleClick}
-                      placeholder="Create a post!"
-                      />
-                      )}
-                    {showCreatePost && <Navigate to="/submit" replace={true} />}
-                  </>
-                }
-                />
-              <Route path="/" element={<PostsList />} />
-              <Route path="/submit" element={<CreatePost />} />
+              <Route path="/" element={<HomePage user={user} setUser={setUser} setPosts={setPosts} posts={posts} />} /> 
+              <Route path="/profile" element={<ProfilePage />} />
             </Routes>
-                {posts.length === 0 ? "No Posts Yet" : <PostsList posts={posts} />}
+                
           </>
         ) : (
           <AuthPage setUser={setUser} />

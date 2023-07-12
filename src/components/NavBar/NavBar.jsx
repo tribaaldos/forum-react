@@ -6,7 +6,7 @@ import { ChevronDownIcon, SearchIcon  } from '@chakra-ui/icons'
 import { Menu, MenuButton, MenuList, MenuItem, Button  } from '@chakra-ui/react'
 
 
-export default function NavBar({ user, setUser }) {
+export default function NavBar({setShowCreatePost, user, setUser }) {
   function handleLogOut() {
     userService.logOut();
     setUser(null);
@@ -15,7 +15,7 @@ export default function NavBar({ user, setUser }) {
   return (
     <ChakraProvider>
       <nav>
-      <Link to="/"> FORUM </Link>
+      <Link to="" onClick={() => setShowCreatePost(false)}> FORUM </Link>
       <IconButton aria-label='Search database' icon={<SearchIcon />} />
       <input type="text"></input>
       <Menu>
@@ -26,7 +26,7 @@ export default function NavBar({ user, setUser }) {
             <MenuItem onClick={handleLogOut}><Link to="" >Log Out</Link></MenuItem>
           </MenuList>
       </Menu>
-    {/* <Link to="" onClick={handleLogOut}>Log Out</Link> */}
+    <Link to="" onClick={handleLogOut}>Log Out</Link>
       </nav>
     </ChakraProvider>
   );
