@@ -15,10 +15,11 @@ export default function NavBar({setShowCreatePost, user, setUser }) {
   return (
     <ChakraProvider>
       <nav>
-      <Link to="/" onClick={() => setShowCreatePost(false)}> FORUM </Link>
+      <Link to="/" onClick={() => setShowCreatePost(false)}> FORUM  </Link>
       <IconButton aria-label='Search database' icon={<SearchIcon />} />
       <input type="text"></input>
       <Menu>
+          
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>Profile</MenuButton>
           <MenuList>
             <MenuList><Link to ="/posts">HEY</Link></MenuList>

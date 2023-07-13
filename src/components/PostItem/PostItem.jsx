@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MessageSquare} from 'react-feather';
 
 const PostItem = ({ post }) => {
   return (
     <div className="post-item">
-      <h1>Title: {post.title}</h1>
-      <p>Text: {post.text}</p>
-
       <Link to={`/post/${post._id}`}>
-        <button>Comment</button>
+        <h2><b>{post.title}</b></h2>
+        <p>Text: {post.text}</p>
+        <button><MessageSquare /></button>
       </Link>
     </div>
   );
