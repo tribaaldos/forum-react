@@ -9,6 +9,6 @@ export async function addPost (formData) {
     return sendRequest(BASE_URL, 'POST', formData)
 }
 
-export async function addComment (formComment) {
-    return sendRequest(BASE_URL, 'POST', formComment)
+export async function getDetail(postId) {
+    return sendRequest(`${BASE_URL}/${postId}`)
 }

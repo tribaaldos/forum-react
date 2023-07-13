@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
+import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
 
 export default function PostDetail({ setPosts, posts }) {
   const { postId } = useParams();
-  const post = posts.find((p) => p._id === postId);
+  // const post = posts.find((p) => p._id === postId);
+  const [post, setPost] = useState(null) 
+  const [formComment, setComment] = useState({comment: ''});
 
-  const [formComment, setComment] = useState('');
-
+  useEffect(() => {
+    async function getPost() {
+      const post = await postsAPI.getDetail(postId)
+      setPost(post)
+    }
+    getPost();
+  }, [])
   const handleChange = (evt) => {
     const data = {...formComment, [evt.target.name]: evt.target.value}
     setComment(data);
@@ -16,10 +24,9 @@ export default function PostDetail({ setPosts, posts }) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    const comment = await postsAPI.addComment(formComment);
-    post.comments.push(comment);
-    setPosts([...posts]);
-    setComment('');
+    const comment = await commentAPI.addComment(formComment, postId);
+    setPost(comment)
+    setComment({comment: ''});
   }
 
   return (
@@ -27,8 +34,8 @@ export default function PostDetail({ setPosts, posts }) {
       <NavBar />
 
       <div>
-        <h1>Title: {post.title}</h1>
-        <p>Text: {post.text}</p>
+        <h1>Title: {post && post.title}</h1>
+        <p>Text: {post && post.text}</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -42,9 +49,9 @@ export default function PostDetail({ setPosts, posts }) {
         </form>
 
         <h2>Comments:</h2>
-        {/* {post.comments.map((comment, index) => (
-          <p key={index}>{comment}</p>
-        ))} */}
+        {post && post.comments.map((comment, index) => (
+          <p key={index}>{comment.comment}</p>
+        ))}
       </div>
     </>
   );

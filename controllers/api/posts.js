@@ -2,8 +2,8 @@ const Post = require ('../../models/post')
 
 module.exports = {
     index,
-    addPost, 
-    addComment
+    addPost,
+    show,
 };
 
 async function index(req,res) {
@@ -17,8 +17,7 @@ async function addPost(req, res) {
     res.json(post)
 }
 
-async function addComment(req, res) {
-    const { postId } = req.params;
-    const { comment } = req.body;
-    res.json(comment)
+async function show(req, res) {
+    const post = await Post.findOne({_id: req.params.id})
+    res.json(post)
 }
