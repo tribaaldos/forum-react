@@ -2,6 +2,9 @@ import CreatePost from '../CreatePost/CreatePost'
 import PostsList from '../PostsList/PostsList'
 import { useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
+
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+
 export default function HomePage({user, setUser, setPosts, posts}) {
     const [showCreatePost, setShowCreatePost] = useState(false);
     
@@ -13,7 +16,7 @@ export default function HomePage({user, setUser, setPosts, posts}) {
 
         <>
             <NavBar setShowCreatePost={setShowCreatePost} user={user} setUser={setUser} />
-
+            <AccountCircleRoundedIcon />
             {!showCreatePost && <input type="text"
                       onClick={() => setShowCreatePost(true)}
                       placeholder="Create a post!"

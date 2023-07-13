@@ -2,7 +2,6 @@ import {Textarea } from '@chakra-ui/react'
 import './CreatePost.css'
 import { useState } from 'react';
 import * as postsAPI from '../../utilities/posts-api';
-import PostDetail from '../../pages/PostDetail/PostDetail'
 
 export default function CreatePost({setPosts, posts, setShowCreatePost}) {
 
@@ -30,15 +29,16 @@ export default function CreatePost({setPosts, posts, setShowCreatePost}) {
 
     <h3>&nbsp; Create a Post</h3>
     <form onSubmit={handleSubmit}>    
-      <input required className='title' placeholder='Write a title'name="title" value={formData.title || '' } onChange={handleChange} />
-      <Textarea required className='post' placeholder='Text here' name="text" value={formData.text || ''} onChange={handleChange} />
+      <input required className='title' placeholder='Write a title'name="title"
+      value={formData.title || '' } onChange={handleChange} />
+      <Textarea required className='post' placeholder='Text here' name="text" 
+      value={formData.text || ''} onChange={handleChange} />
       <button type="submit">POST</button>
     </form>
 
    
 
     </div>
-    {/* <PostDetail formData={formData} /> */}
     </>
   )
 }
