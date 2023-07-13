@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
 
-export default function PostDetail({ setPosts, posts }) {
+export default function PostDetail({ setPosts, posts, user, setUser }) {
   const { postId } = useParams();
   // const post = posts.find((p) => p._id === postId);
   const [post, setPost] = useState(null) 
@@ -31,7 +31,7 @@ export default function PostDetail({ setPosts, posts }) {
 
   return (
     <>
-      <NavBar />
+      <NavBar user={user} setUser={setUser}/>
 
       <div>
         <h1>Title: {post && post.title}</h1>
