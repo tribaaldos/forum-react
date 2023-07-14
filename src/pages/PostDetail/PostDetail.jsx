@@ -28,9 +28,15 @@ export default function PostDetail({ setPosts, posts, user, setUser }) {
   const handleDelete = async () => {
     await postsAPI.deletePost(postId)
   }
-  const handleDeleteComment = async () => {
-    await commentAPI.deleteComment(postId)
-  }
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await commentAPI.deleteComment(commentId, postId);
+      // Rest of the code...
+    } catch (error) {
+      console.log('Error deleting the comment:', error);
+    }
+  };
+  
   const handleLike = async () => {
     if (!liked) {
       try {
@@ -60,7 +66,7 @@ export default function PostDetail({ setPosts, posts, user, setUser }) {
         <p>Text: {post && post.text}</p>
 
         {likeButton}
-        <button onClick={handleDelete} navigate to="/">Delete</button>
+        <button onClick={handleDelete}>Delete</button>
 
 
         <form onSubmit={handleSubmit}>
@@ -75,12 +81,13 @@ export default function PostDetail({ setPosts, posts, user, setUser }) {
         </form>
 
         <h2><strong>Comments:</strong></h2>
-        {post && post.comments.map((comment, index) => (
-          <>
-          <p key={index}>{comment.comment } {likeButton} </p>
-          <button onClick={handleDeleteComment} >Delete Comment</button>
-          </>
-        ))}
+        {post && post.comments.map((comment) => (
+        <div key={comment._id}>
+          <p>{comment.comment}</p>
+          {likeButton}
+          <button onClick={() => handleDeleteComment(comment._id)}>Delete Comment</button>
+        </div>
+      ))}
       </div>
     </>
   );
