@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
-import { withRouter } from 'react-router-dom';
+// import  withRouter  from 'react-router-dom';
 
 export default function PostDetail({ setPosts, posts, user, setUser, history }) {
   const { postId } = useParams();
@@ -86,11 +86,11 @@ const handleDeleteComment = async (commentId) => {
           />
           <button type="submit">Submit Comment</button>
         </form>
-
+        
         <h2><strong>Comments:</strong></h2>
         {post && post.comments.map((comment) => (
-        <div key={comment._id}>
-          <p>{comment.comment}</p>
+        <div key={comment._id} user={user}>
+          <p>{comment.user.name}{comment.comment}</p>
           {likeButton}
           <button onClick={() => handleDeleteComment(comment._id)}>Delete Comment</button>
         </div>
