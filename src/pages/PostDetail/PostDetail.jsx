@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
+import { withRouter } from 'react-router-dom';
 
-export default function PostDetail({ setPosts, posts, user, setUser }) {
+export default function PostDetail({ setPosts, posts, user, setUser, history }) {
   const { postId } = useParams();
-  // const post = posts.find((p) => p._id === postId);
+
   const [post, setPost] = useState(null) 
   const [formComment, setComment] = useState({comment: ''});
 
@@ -26,16 +27,22 @@ export default function PostDetail({ setPosts, posts, user, setUser }) {
   }
 
   const handleDelete = async () => {
-    await postsAPI.deletePost(postId)
-  }
-  const handleDeleteComment = async (commentId) => {
-    try {
-      await commentAPI.deleteComment(commentId, postId);
-      // Rest of the code...
-    } catch (error) {
-      console.log('Error deleting the comment:', error);
-    }
+  
+      await postsAPI.deletePost(postId);
+      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+      history.push('/')
   };
+  
+const handleDeleteComment = async (commentId) => {
+
+    await commentAPI.deleteComment(commentId, postId);
+    setPost((prevPost) => {
+      const updatedComments = prevPost.comments.filter((comment) => comment._id !== commentId);
+      return { ...prevPost, comments: updatedComments };
+    });
+
+};
+
   
   const handleLike = async () => {
     if (!liked) {

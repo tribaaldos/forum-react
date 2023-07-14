@@ -31,8 +31,8 @@ const PostItem = ({ post }) => {
         <h2><b>{post.title}</b></h2>
         <p>{post.text}</p>
         <button><MessageSquare /></button>
-        {likeButton}
       </Link>
+        {likeButton}
     </div>
   );
 };
