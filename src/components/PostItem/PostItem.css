@@ -2,3 +2,7 @@
     border-radius: solid black;
     border-color: black;
 }
+
+button {
+    background-color: red;
+}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/users-service';
-
+import './NavBar.css'; 
 import { ChakraProvider, IconButton } from '@chakra-ui/react'
 import { SearchIcon  } from '@chakra-ui/icons'
 import { Menu, MenuButton, MenuList, MenuItem, Button  } from '@chakra-ui/react'

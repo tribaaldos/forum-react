@@ -9,4 +9,6 @@ router.get('/:id', ensureLoggedIn, postsCtrl.show)
 
 router.post('/', ensureLoggedIn, postsCtrl.addPost);
 
+router.delete('/:id', ensureLoggedIn, postsCtrl.deletePost);
+
 module.exports = router;

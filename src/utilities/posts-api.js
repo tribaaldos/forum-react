@@ -12,3 +12,7 @@ export async function addPost (formData) {
 export async function getDetail(postId) {
     return sendRequest(`${BASE_URL}/${postId}`)
 }
+
+export async function deletePost(postId) {
+    return sendRequest(`${BASE_URL}/${postId}`, 'DELETE');
+  }
