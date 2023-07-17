@@ -4,13 +4,18 @@ import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
 import { ChakraProvider, Textarea, Button, Input } from '@chakra-ui/react'
+
 export default function PostDetail({ setPosts, posts, user, setUser, history }) {
   const { postId } = useParams();
 
   const [post, setPost] = useState(null);
   const [formComment, setComment] = useState({ comment: '' });
+
+  const [commentLike, setCommentLike] = useState(false);
+  
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(null);
+
   const [updatedPost, setUpdatedPost] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -18,12 +23,13 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     async function getPost() {
       const post = await postsAPI.getDetail(postId);
       setPost(post);
+      // setCommentLike(post && post.comments.likes.length)
       setLikeCount(post.likes.length)
       setUpdatedPost(post);
     }
     getPost();
   }, [postId]);
-
+  console.log(post)
     async function handleUpdatePost() {
     await postsAPI.updatePost(postId, updatedPost);
     setPost(updatedPost);
@@ -54,8 +60,22 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     const updatedPosts = posts.map(p => p._id === post1._id ? post1 : p)
     setPosts(updatedPosts)
     setLikeCount(post1.likes.length)
+    
   }
 
+  async function handleCommentLike(commentId) {
+    const updatedComment = await commentAPI.toggleLikesComment(commentId, postId);
+    const updatedPosts = posts.map(p => p._id === updatedComment._id ? updatedComment : p)
+    setPosts(updatedPosts)
+    setPost(updatedComment)
+    setCommentLike(!commentLike)
+    // const updatedComments = post.comments.map((comment) =>
+    //   comment._id === updatedComment._id ? updatedComment : comment
+    // );
+    // setPost((prevPost) => ({ ...prevPost, comments: updatedComments }));
+    // setLikeCount(updatedComment.likes.length);
+  }
+  
   async function handleSubmit(evt) {
     evt.preventDefault();
     if (editMode) return;
@@ -96,6 +116,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
         ) : (
           <>
             <h1>
+              <p>{post && post.user.name}</p>
               <strong>{post && post.title}</strong>
             </h1>
             <p> {post && post.text}</p>
@@ -125,7 +146,9 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
             <div key={comment._id} user={user}>
               <p>{comment.user.name}</p>
               <p>{comment.comment}</p>
-              {likeButton}
+              <Button size='xs' colorScheme='gray' className='likebutton' onClick={() => handleCommentLike(comment._id)}>
+              {`${comment.likes.length} ${comment.likes.length === 1 ? 'Like' : 'Likes'}`}
+              </Button>
               <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>
             </div>
           ))}

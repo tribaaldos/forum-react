@@ -3,6 +3,7 @@ const Post = require ('../../models/post')
 module.exports = {
     addComment,
     deleteComment,
+    toggleLikeComment
 };
 
 async function addComment(req, res) {
@@ -23,4 +24,20 @@ async function addComment(req, res) {
     await post.save();
     res.json(post);
 
+  }
+
+  async function toggleLikeComment(req, res) {
+    const { id, commentId } = req.params;
+    const post = await Post.findOne({ _id: id });
+    const comment = post.comments.find((comment) => comment._id.toString() === commentId);
+    if (comment.likes.includes(req.user._id)) {
+      console.log('removing like');
+      comment.likes.remove(req.user._id);
+    } else {
+      console.log('adding like');
+      comment.likes.push(req.user._id);
+    }
+    console.log(comment)
+    await post.save();
+    res.json(post);
   }

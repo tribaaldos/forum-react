@@ -10,7 +10,7 @@ module.exports = {
 };
 
 async function index(req, res) {
-    const posts = await Post.find({})
+    const posts = await Post.find({}).populate('user').exec()
     res.json(posts)
 }
 
@@ -21,7 +21,7 @@ async function addPost(req, res) {
 }
 
 async function show(req, res) {
-    const post = await Post.findOne({_id: req.params.id})
+    const post = await Post.findOne({_id: req.params.id}).populate('comments').populate('user').exec()
     res.json(post)
 }
 

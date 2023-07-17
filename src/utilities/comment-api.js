@@ -14,3 +14,7 @@ export async function deleteComment(commentId, postId) {
   const url = `${BASE_URL}/${postId}/${commentId}`;
   return sendRequest(url, 'DELETE');
 }
+
+export async function toggleLikesComment(commentId, postId) {
+  return sendRequest(`${BASE_URL}/${postId}/${commentId}/likes`, 'PUT', {commentId}, {postId} );
+}

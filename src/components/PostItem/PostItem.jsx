@@ -6,7 +6,7 @@ import {ChakraProvider, Button} from '@chakra-ui/react'
 const PostItem = ({ post, user, setPosts, posts }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post && post.likes.length || 0);
-
+  
   async function handleLike() {
     const post1 = await postsAPI.toggleLikes(post._id)
     const updatedPosts = posts.map(p => p._id === post1._id ? post1 : p)
@@ -34,11 +34,12 @@ const PostItem = ({ post, user, setPosts, posts }) => {
       return 'Less than an hour ago';
     }
   };
+  console.log(post && post)
   return (
     <div className="post-item">
       <ChakraProvider>
       <Link to={`/post/${post._id}`}>
-        {`posted by /${user.name}  ${getTimeDifference()}`}
+        {`posted by /${post.user.name}  ${getTimeDifference()}`}
         <h2><b>{post.title}</b></h2>
         <p>{post.text}</p>
         <Button size='xs'><MessageSquare /></Button>
