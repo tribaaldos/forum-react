@@ -2,22 +2,19 @@ import CreatePost from '../CreatePost/CreatePost'
 import PostsList from '../PostsList/PostsList'
 import { useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-
+import { ChakraProvider, Input } from '@chakra-ui/react'
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 export default function HomePage({user, setUser, setPosts, posts}) {
     const [showCreatePost, setShowCreatePost] = useState(false);
     
-    // const handleClick = () => {
-    //   setShowCreatePost(true);
-    // };
-    
     return (
 
         <>
+        <ChakraProvider>
             <NavBar setShowCreatePost={setShowCreatePost} user={user} setUser={setUser} />
-            <AccountCircleRoundedIcon />
-            {!showCreatePost && <input type="text"
+           
+            {!showCreatePost && <Input leftIcon={AccountCircleRoundedIcon} type="text"
                       onClick={() => setShowCreatePost(true)}
                       placeholder="Create a post!"
                       /> }
@@ -26,7 +23,8 @@ export default function HomePage({user, setUser, setPosts, posts}) {
             
            
 
-            {!showCreatePost && <PostsList posts={posts} /> }
+            {!showCreatePost && <PostsList user={user} posts={posts} /> }
+        </ChakraProvider>
             
         </>
     )

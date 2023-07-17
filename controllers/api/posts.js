@@ -5,7 +5,7 @@ module.exports = {
     addPost,
     show,
     deletePost,
- 
+    updatePost
 };
 
 async function index(req, res) {
@@ -31,3 +31,15 @@ async function deletePost(req, res) {
     res.json(post)
   }
   
+  async function updatePost(req, res) {
+    const postId = req.params.id;
+    const userId = req.user._id;
+    const updatedPost = req.body;
+  
+    const post = await Post.findOneAndUpdate(
+      { _id: postId, user: userId },
+      updatedPost,
+      { new: true }
+    );
+    res.json(post);
+  }

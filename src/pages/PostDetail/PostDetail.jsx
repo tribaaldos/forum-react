@@ -3,51 +3,54 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
-// import  withRouter  from 'react-router-dom';
-
+import { ChakraProvider, Textarea, Button, Input } from '@chakra-ui/react'
 export default function PostDetail({ setPosts, posts, user, setUser, history }) {
   const { postId } = useParams();
 
-  const [post, setPost] = useState(null) 
-  const [formComment, setComment] = useState({comment: ''});
-
+  const [post, setPost] = useState(null);
+  const [formComment, setComment] = useState({ comment: '' });
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [updatedPost, setUpdatedPost] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     async function getPost() {
-      const post = await postsAPI.getDetail(postId)
-      setPost(post)
+      const post = await postsAPI.getDetail(postId);
+      setPost(post);
+      setUpdatedPost(post);
     }
     getPost();
-  }, [postId])
-  const handleChange = (evt) => {
-    const data = {...formComment, [evt.target.name]: evt.target.value}
-    setComment(data);
-  }
+  }, [postId]);
 
-  const handleDelete = async () => {
-  
-      await postsAPI.deletePost(postId);
-      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
-      history.push('/')
+    async function handleUpdatePost() {
+    await postsAPI.updatePost(postId, updatedPost);
+    setPost(updatedPost);
+    setEditMode(false);
   };
-  
-const handleDeleteComment = async (commentId) => {
 
+    function handleChange(evt) {
+    const data = { ...formComment, [evt.target.name]: evt.target.value };
+    setComment(data);
+  };
+
+    async function handleDelete() {
+    await postsAPI.deletePost(postId);
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+    history.push('/');
+  };
+
+    async function handleDeleteComment(commentId) {
     await commentAPI.deleteComment(commentId, postId);
     setPost((prevPost) => {
       const updatedComments = prevPost.comments.filter((comment) => comment._id !== commentId);
       return { ...prevPost, comments: updatedComments };
     });
+  };
 
-};
-
-  
-  const handleLike = async () => {
+    async function handleLike() {
     if (!liked) {
       try {
-       
         setLiked(true);
         setLikeCount(likeCount + 1);
       } catch (error) {
@@ -55,46 +58,81 @@ const handleDeleteComment = async (commentId) => {
       }
     }
   };
+
   async function handleSubmit(evt) {
     evt.preventDefault();
+    if (editMode) return;
+    
     const comment = await commentAPI.addComment(formComment, postId);
-    setPost(comment)
-    setComment({comment: ''});
+    setPost(comment);
+    setComment({ comment: '' });
   }
-  const likeButton = (<button className='likebutton' onClick={handleLike} >
-  {`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
-  </button>);
+
+  const likeButton = (
+    <Button size='xs' colorScheme='gray' className='likebutton' onClick={handleLike}>
+      {`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
+    </Button>
+  );
+
   return (
     <>
-      <NavBar user={user} setUser={setUser}/>
+      <NavBar user={user} setUser={setUser} />
 
       <div>
-        <h1><strong>{post && post.title}</strong> </h1>
-        <p>Text: {post && post.text}</p>
-
-        {likeButton}
-        <button onClick={handleDelete}>Delete</button>
-
+        <ChakraProvider>
+        {editMode ? (
+          <>
+            <p>Title:</p>
+            <Input size='sm'
+              type="text"
+              value={updatedPost.title}
+              onChange={(evt) => setUpdatedPost({ ...updatedPost, title: evt.target.value })}
+              />
+            <p>Text:</p>
+            <Textarea size='sm'
+              value={updatedPost.text}
+              onChange={(evt) => setUpdatedPost({ ...updatedPost, text: evt.target.value })}
+              />
+            <Button size='xs' colorScheme='gray' onClick={handleUpdatePost}>Update</Button>
+            <Button size='xs' colorScheme='gray' onClick={() => setEditMode(false)}>Cancel</Button>
+          </>
+        ) : (
+          <>
+            <h1>
+              <strong>{post && post.title}</strong>
+            </h1>
+            <p> {post && post.text}</p>
+            {likeButton}
+            <Button size='xs' colorScheme='gray'onClick={handleDelete}>Delete</Button>
+            <Button size='xs' colorScheme='gray' onClick={() => setEditMode(true)}>Edit</Button>
+          </>
+        )}
 
         <form onSubmit={handleSubmit}>
-          <input
+          <Input size='sm'
+            required
             type="text"
             name="comment"
             value={formComment.comment || ''}
             onChange={handleChange}
             placeholder="Write a comment"
-          />
-          <button type="submit">Submit Comment</button>
+            />
+          <Button size ='xs' colorScheme='gray' type="submit">Submit Comment</Button>
         </form>
-        
-        <h2><strong>Comments:</strong></h2>
-        {post && post.comments.map((comment) => (
-        <div key={comment._id} user={user}>
-          <p>{comment.user.name}{comment.comment}</p>
-          {likeButton}
-          <button onClick={() => handleDeleteComment(comment._id)}>Delete Comment</button>
-        </div>
-      ))}
+
+        <h2>
+          <strong>Comments:</strong>
+        </h2>
+        {post &&
+          post.comments.map((comment) => (
+            <div key={comment._id} user={user}>
+              <p>{comment.user.name}</p>
+              <p>{comment.comment}</p>
+              {likeButton}
+              <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>
+            </div>
+          ))}
+          </ChakraProvider>
       </div>
     </>
   );
