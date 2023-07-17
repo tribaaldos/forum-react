@@ -31,7 +31,7 @@ export default function PostsList({ posts, user }) {
     function handleOldSort() {
         setSortingMethod('old');
   };
-
+//hey
     function handleRandomSort() {
         setSortingMethod('');
   };
