@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostItem from '../../components/PostItem/PostItem';
 import './PostsList.css';
-import { ChakraProvider, Button } from '@chakra-ui/react'
+import { ChakraProvider, Button, extendTheme } from '@chakra-ui/react'
 
 export default function PostsList({ posts, user }) {
   const [sortedPosts, setSortedPosts] = useState([]);
@@ -36,13 +36,30 @@ export default function PostsList({ posts, user }) {
         setSortingMethod('');
   };
 
+  const customTheme = extendTheme({
+    components: {
+      Button: {
+        variants: {
+          active: {
+            bg: 'blue.500',
+            color: 'white',
+          },
+          inactive: {
+            bg: 'gray.200',
+            color: 'gray.800',
+          },
+        },
+      },
+    },
+  });
+
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={customTheme}>
     <div className="allposts">
       <nav>
-        <Button size='xs' variant={sortingMethod === 'new'} onClick={handleSort}>New Posts </Button>
+        <Button size='xs' variant={sortingMethod === 'new' ? 'active' : 'inactive'} onClick={handleSort}>New Posts </Button>
         <Button size='xs' variant={sortingMethod === 'old'} onClick={handleOldSort}>Old Posts </Button>
-        <Button size='xs' variant={}onClick={handleRandomSort}>Random </Button>
+        <Button size='xs' variant={sortingMethod === ''} onClick={handleRandomSort}>Random </Button>
         {setSortingMethod}
       </nav>
         {sortedPosts.map((p, idx) => (
