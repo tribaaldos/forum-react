@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare } from 'react-feather';
-// import * as postsAPI from '../../utilities/posts-api';
+import * as postsAPI from '../../utilities/posts-api';
 import {ChakraProvider, Button} from '@chakra-ui/react'
-const PostItem = ({ post, user }) => {
+const PostItem = ({ post, user, setPosts, posts }) => {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(post && post.likes.length || 0);
 
-  const handleLike = async () => {
-    if (!liked) {
-      try {
-        setLiked(true);
-        setLikeCount(likeCount + 1);
-        // await postsAPI.likePost(post._id); // Actualizar la función para indicar la lógica de like en la API
-      } catch (error) {
-        console.log('Error liking the post:', error);
-      }
-    }
-  };
+  async function handleLike() {
+    const post1 = await postsAPI.toggleLikes(post._id)
+    const updatedPosts = posts.map(p => p._id === post1._id ? post1 : p)
+    setPosts(updatedPosts)
+    setLikeCount(post1.likes.length)
+  }
 
   const likeButton = (
     <Button size='xs' className="likebutton" onClick={handleLike}>

@@ -3,7 +3,7 @@ import PostItem from '../../components/PostItem/PostItem';
 import './PostsList.css';
 import { ChakraProvider, Button, extendTheme } from '@chakra-ui/react'
 
-export default function PostsList({ posts, user }) {
+export default function PostsList({ setPosts, posts, user }) {
   const [sortedPosts, setSortedPosts] = useState([]);
   const [sortingMethod, setSortingMethod] = useState('');
 
@@ -18,10 +18,11 @@ export default function PostsList({ posts, user }) {
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
       setSortedPosts(sorted);
-    } else {
-      const shuffled = [...posts].sort(() => Math.random() - 0.5);
-      setSortedPosts(shuffled);
-    }
+    } 
+    // else {
+    //   const shuffled = [...posts].sort(() => Math.random() - 0.5);
+    //   setSortedPosts(shuffled);
+    // }
   }, [posts, sortingMethod]);
 
     function handleSort() {
@@ -63,7 +64,7 @@ export default function PostsList({ posts, user }) {
         {setSortingMethod}
       </nav>
         {sortedPosts.map((p, idx) => (
-            <PostItem key={idx} user={user} post={p} comments={p.comments} />
+            <PostItem key={idx} user={user} posts = {posts} setPosts={setPosts} post={p} comments={p.comments} />
             ))}    
     </div>
     </ChakraProvider>

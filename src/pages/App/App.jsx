@@ -33,7 +33,8 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage 
                 user={user} setUser= {setUser} setPosts={setPosts} posts={posts} />} /> 
-              <Route path="/profile" element={<ProfilePage user={user} setUser={setUser}/>} />
+              <Route path="/profile" element={<ProfilePage
+               user={user} setUser={setUser}/>} />
               <Route path="/post/:postId" element={<PostDetail
                 component={PostItem} posts={posts} setPosts={setPosts}user={user} setUser={setUser} />} />
             </Routes>

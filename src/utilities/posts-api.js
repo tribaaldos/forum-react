@@ -17,7 +17,11 @@ export async function deletePost(postId) {
     return sendRequest(`${BASE_URL}/${postId}`, 'DELETE');
   }
 
-  export async function updatePost(postId, postData) {
+export async function updatePost(postId, postData) {
     return sendRequest(`${BASE_URL}/${postId}`, 'PUT', postData);
-  }
+}
+
+export async function toggleLikes(postId, ) {
+    return sendRequest(`${BASE_URL}/${postId}/likes`, 'PUT', {postId} );
+}
   

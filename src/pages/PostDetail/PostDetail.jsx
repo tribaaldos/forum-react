@@ -10,7 +10,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
   const [post, setPost] = useState(null);
   const [formComment, setComment] = useState({ comment: '' });
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(null);
   const [updatedPost, setUpdatedPost] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -18,6 +18,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     async function getPost() {
       const post = await postsAPI.getDetail(postId);
       setPost(post);
+      setLikeCount(post.likes.length)
       setUpdatedPost(post);
     }
     getPost();
@@ -48,16 +49,12 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     });
   };
 
-    async function handleLike() {
-    if (!liked) {
-      try {
-        setLiked(true);
-        setLikeCount(likeCount + 1);
-      } catch (error) {
-        console.log('Error liking the post:', error);
-      }
-    }
-  };
+  async function handleLike() {
+    const post1 = await postsAPI.toggleLikes(post._id)
+    const updatedPosts = posts.map(p => p._id === post1._id ? post1 : p)
+    setPosts(updatedPosts)
+    setLikeCount(post1.likes.length)
+  }
 
   async function handleSubmit(evt) {
     evt.preventDefault();
@@ -70,7 +67,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
 
   const likeButton = (
     <Button size='xs' colorScheme='gray' className='likebutton' onClick={handleLike}>
-      {`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
+      {`${post && likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
     </Button>
   );
 
@@ -122,7 +119,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
 
         <h2>
           <strong>Comments:</strong>
-        </h2>
+        </h2>ƒ
         {post &&
           post.comments.map((comment) => (
             <div key={comment._id} user={user}>

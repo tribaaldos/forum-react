@@ -8,5 +8,5 @@ router.get('/:id', ensureLoggedIn, postsCtrl.show);
 router.post('/', ensureLoggedIn, postsCtrl.addPost);
 router.delete('/:id', ensureLoggedIn, postsCtrl.deletePost);
 router.put('/:id', ensureLoggedIn, postsCtrl.updatePost);
-
+router.put('/:id/likes', ensureLoggedIn, postsCtrl.toggleLike);
 module.exports = router;

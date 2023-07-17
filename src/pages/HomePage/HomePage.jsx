@@ -23,7 +23,7 @@ export default function HomePage({user, setUser, setPosts, posts}) {
             
            
 
-            {!showCreatePost && <PostsList user={user} posts={posts} /> }
+            {!showCreatePost && <PostsList setPosts={setPosts}  user={user} posts={posts} /> }
         </ChakraProvider>
             
         </>

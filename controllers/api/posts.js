@@ -5,7 +5,8 @@ module.exports = {
     addPost,
     show,
     deletePost,
-    updatePost
+    updatePost,
+    toggleLike
 };
 
 async function index(req, res) {
@@ -31,7 +32,7 @@ async function deletePost(req, res) {
     res.json(post)
   }
   
-  async function updatePost(req, res) {
+async function updatePost(req, res) {
     const postId = req.params.id;
     const userId = req.user._id;
     const updatedPost = req.body;
@@ -43,3 +44,16 @@ async function deletePost(req, res) {
     );
     res.json(post);
   }
+
+async function toggleLike(req, res) {
+  const post = await Post.findOne({_id: req.params.id})
+  if (post.likes.includes(req.user._id)){
+    console.log('removing like')
+    post.likes.remove(req.user._id)
+  } else {
+    console.log('adding like')
+    post.likes.push(req.user._id)
+  } 
+  await post.save()
+  res.json(post)
+}
