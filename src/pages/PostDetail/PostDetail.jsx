@@ -165,6 +165,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
               <Button size='xs' colorScheme='gray' className='likebutton' onClick={() => handleCommentLike(comment._id)}>
                 {comment.likes.length} <ThumbUpAltIcon />
               </Button>
+              
               {(user._id == (comment && comment.user._id)) && <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>}
               
             </div>
