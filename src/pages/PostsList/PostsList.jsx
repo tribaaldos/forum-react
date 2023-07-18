@@ -18,11 +18,19 @@ export default function PostsList({ setPosts, posts, user }) {
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
       setSortedPosts(sorted);
-    } 
-    // else {
-    //   const shuffled = [...posts].sort(() => Math.random() - 0.5);
-    //   setSortedPosts(shuffled);
-    // }
+    } else if (sortingMethod === 'trend') {
+      const sorted = [...posts].sort(
+        (a, b) => (b.likes.length - a.likes.length)
+      )
+      setSortedPosts(sorted);
+
+    } else {
+      const sorted = [...posts].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setSortedPosts(sorted);
+    }
+
   }, [posts, sortingMethod]);
 
     function handleSort() {
@@ -32,10 +40,10 @@ export default function PostsList({ setPosts, posts, user }) {
     function handleOldSort() {
         setSortingMethod('old');
   };
-//hey
-    function handleRandomSort() {
-        setSortingMethod('');
-  };
+    function handleTrendSort() {
+      setSortingMethod('trend');
+    }
+
 
   const customTheme = extendTheme({
     components: {
@@ -59,12 +67,12 @@ export default function PostsList({ setPosts, posts, user }) {
     <div className="allposts">
       <nav>
         <Button size='xs' variant={sortingMethod === 'new' ? 'active' : 'inactive'} onClick={handleSort}>New Posts </Button>
-        <Button size='xs' variant={sortingMethod === 'old'} onClick={handleOldSort}>Old Posts </Button>
-        <Button size='xs' variant={sortingMethod === ''} onClick={handleRandomSort}>Random </Button>
+        <Button size='xs' variant={sortingMethod === 'old' ? 'active' : 'inactive'} onClick={handleOldSort}>Old Posts </Button>
+        <Button size='xs' variant={sortingMethod === 'trend' ? 'active' : 'inactive'} onClick={handleTrendSort}>Fire Posts</Button>
         {setSortingMethod}
       </nav>
         {sortedPosts.map((p, idx) => (
-            <PostItem key={idx} user={user} posts = {posts} setPosts={setPosts} post={p} comments={p.comments} />
+            <PostItem key={p._id} user={user} posts = {posts} setPosts={setPosts} post={p} comments={p.comments} />
             ))}    
     </div>
     </ChakraProvider>

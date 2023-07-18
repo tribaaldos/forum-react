@@ -4,7 +4,8 @@ import NavBar from '../../components/NavBar/NavBar';
 import * as commentAPI from '../../utilities/comment-api';
 import * as postsAPI from '../../utilities/posts-api';
 import { ChakraProvider, Textarea, Button, Input } from '@chakra-ui/react'
-
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import './PostDetail.css'
 export default function PostDetail({ setPosts, posts, user, setUser, history }) {
   const { postId } = useParams();
 
@@ -13,7 +14,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
 
   const [commentLike, setCommentLike] = useState(false);
   
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(null);
 
   const [updatedPost, setUpdatedPost] = useState(null);
@@ -69,11 +70,6 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     setPosts(updatedPosts)
     setPost(updatedComment)
     setCommentLike(!commentLike)
-    // const updatedComments = post.comments.map((comment) =>
-    //   comment._id === updatedComment._id ? updatedComment : comment
-    // );
-    // setPost((prevPost) => ({ ...prevPost, comments: updatedComments }));
-    // setLikeCount(updatedComment.likes.length);
   }
   
   async function handleSubmit(evt) {
@@ -87,9 +83,25 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
 
   const likeButton = (
     <Button size='xs' colorScheme='gray' className='likebutton' onClick={handleLike}>
-      {`${post && likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
+    {post && likeCount} <ThumbUpAltIcon /> 
     </Button>
   );
+
+  // const getTimeDifference = () => {
+  //   const currentTime = new Date().getTime();
+  //   const postTime = new Date(commentId.createdAt).getTime();
+  //   const timeDifference = currentTime - postTime;
+
+  //   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  //   const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24)
+  //   if (days > 0) {
+  //     return `${days} day${days === 1 ? '' : 's'} ago`;
+  //   } else if (hours > 0) {
+  //     return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+  //   } else {
+  //     return 'Less than an hour ago';
+  //   }
+  // };
 
   return (
     <>
@@ -116,17 +128,16 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
         ) : (
           <>
             <h1>
-              <p>{post && post.user.name}</p>
               <strong>{post && post.title}</strong>
             </h1>
             <p> {post && post.text}</p>
             {likeButton}
-            <Button size='xs' colorScheme='gray'onClick={handleDelete}>Delete</Button>
-            <Button size='xs' colorScheme='gray' onClick={() => setEditMode(true)}>Edit</Button>
+            {(user._id == (post && post.user._id)) && <Button size='xs' colorScheme='gray'onClick={handleDelete}>Delete</Button> }
+            {(user._id == (post && post.user._id)) && <Button size='xs' colorScheme='gray' onClick={() => setEditMode(true)}>Edit</Button>}
           </>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form className='inputComment' onSubmit={handleSubmit}>
           <Input size='sm'
             required
             type="text"
@@ -137,21 +148,30 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
             />
           <Button size ='xs' colorScheme='gray' type="submit">Submit Comment</Button>
         </form>
-
+        <div className='comments-container'>
         <h2>
           <strong>Comments:</strong>
-        </h2>ƒ
+        </h2>
+
         {post &&
           post.comments.map((comment) => (
-            <div key={comment._id} user={user}>
-              <p>{comment.user.name}</p>
+            <div key={comment._id} user={user} className="comment-container">
+            <div className="comment-content">
+              <p className="comment-user">commented by /{comment && comment.user.name}</p>
               <p>{comment.comment}</p>
-              <Button size='xs' colorScheme='gray' className='likebutton' onClick={() => handleCommentLike(comment._id)}>
-              {`${comment.likes.length} ${comment.likes.length === 1 ? 'Like' : 'Likes'}`}
-              </Button>
-              <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>
             </div>
+            
+            <div className="comment-buttons">
+              <Button size='xs' colorScheme='gray' className='likebutton' onClick={() => handleCommentLike(comment._id)}>
+                {comment.likes.length} <ThumbUpAltIcon />
+              </Button>
+              {(user._id == (comment && comment.user._id)) && <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>}
+              
+            </div>
+          </div>
+          
           ))}
+          </div>
           </ChakraProvider>
       </div>
     </>

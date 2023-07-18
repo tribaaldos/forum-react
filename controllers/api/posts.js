@@ -21,7 +21,7 @@ async function addPost(req, res) {
 }
 
 async function show(req, res) {
-    const post = await Post.findOne({_id: req.params.id}).populate('comments').populate('user').exec()
+    const post = await Post.findOne({_id: req.params.id}).populate('comments.user').populate('user').exec()
     res.json(post)
 }
 
@@ -46,7 +46,7 @@ async function updatePost(req, res) {
   }
 
 async function toggleLike(req, res) {
-  const post = await Post.findOne({_id: req.params.id})
+  const post = await Post.findOne({_id: req.params.id}).populate('user').exec()
   if (post.likes.includes(req.user._id)){
     console.log('removing like')
     post.likes.remove(req.user._id)
