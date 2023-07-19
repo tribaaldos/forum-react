@@ -9,7 +9,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage'
 import HomePage from '../../pages/HomePage/HomePage';
 import PostDetail from '../../pages/PostDetail/PostDetail'
 import PostItem from '../../components/PostItem/PostItem'
-
+import NavBar from '../../components/NavBar/NavBar'
 export default function App() {
   const [user, setUser] = useState(getUser());
   const [posts, setPosts] = useState([]);
@@ -41,7 +41,11 @@ export default function App() {
                 
           </>
         ) : (
+          <>
+ 
           <AuthPage setUser={setUser} />
+          
+          </>
         )}
       </main>
     </ChakraProvider>

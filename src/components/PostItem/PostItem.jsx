@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { MessageSquare } from 'react-feather';
 import * as postsAPI from '../../utilities/posts-api';
 import {ChakraProvider, Button} from '@chakra-ui/react'
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+
 const PostItem = ({ post, user, setPosts, posts }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post && post.likes.length || 0);
@@ -16,7 +18,7 @@ const PostItem = ({ post, user, setPosts, posts }) => {
 
   const likeButton = (
     <Button size='xs' className="likebutton" onClick={handleLike}>
-      {`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
+      {likeCount} <ThumbUpAltIcon />
     </Button>
   );
   const getTimeDifference = () => {
@@ -42,7 +44,7 @@ const PostItem = ({ post, user, setPosts, posts }) => {
         {`posted by /${post.user.name}  ${getTimeDifference()}`}
         <h2><b>{post.title}</b></h2>
         <p>{post.text}</p>
-        <Button size='xs'><MessageSquare /></Button>
+        <Button size='xs'>{post.comments.length}<MessageSquare /></Button>
       </Link>
         {likeButton}
     </ChakraProvider>

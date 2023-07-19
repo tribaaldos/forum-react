@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PostItem from '../../components/PostItem/PostItem';
 import './PostsList.css';
 import { ChakraProvider, Button, extendTheme } from '@chakra-ui/react'
+import LocalFireDepartmentRoundedIcon from '@mui/icons-material/LocalFireDepartmentRounded';
 
 export default function PostsList({ setPosts, posts, user }) {
   const [sortedPosts, setSortedPosts] = useState([]);
@@ -50,7 +51,7 @@ export default function PostsList({ setPosts, posts, user }) {
       Button: {
         variants: {
           active: {
-            bg: 'blue.500',
+            bg: 'red.500',
             color: 'white',
           },
           inactive: {
@@ -66,9 +67,9 @@ export default function PostsList({ setPosts, posts, user }) {
     <ChakraProvider theme={customTheme}>
     <div className="allposts">
       <nav>
-        <Button size='xs' variant={sortingMethod === 'new' ? 'active' : 'inactive'} onClick={handleSort}>New Posts </Button>
-        <Button size='xs' variant={sortingMethod === 'old' ? 'active' : 'inactive'} onClick={handleOldSort}>Old Posts </Button>
-        <Button size='xs' variant={sortingMethod === 'trend' ? 'active' : 'inactive'} onClick={handleTrendSort}>Fire Posts</Button>
+        <Button size='xs' variant={sortingMethod === 'new' ? 'active' : 'inactive'} onClick={handleSort}>New </Button>
+        <Button size='xs' variant={sortingMethod === 'old' ? 'active' : 'inactive'} onClick={handleOldSort}>Old </Button>
+        <Button size='xs' variant={sortingMethod === 'trend' ? 'active' : 'inactive'} onClick={handleTrendSort}>{< LocalFireDepartmentRoundedIcon/>}</Button>
         {setSortingMethod}
       </nav>
         {sortedPosts.map((p, idx) => (

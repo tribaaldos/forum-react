@@ -107,7 +107,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     <>
       <NavBar user={user} setUser={setUser} />
 
-      <div>
+      <div className='post-detail'>
         <ChakraProvider>
         {editMode ? (
           <>
@@ -158,12 +158,12 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
             <div key={comment._id} user={user} className="comment-container">
             <div className="comment-content">
               <p className="comment-user">commented by /{comment && comment.user.name}</p>
-              <p>{comment.comment}</p>
             </div>
             
             <div className="comment-buttons">
+              <p>{comment.comment}</p>
               <Button size='xs' colorScheme='gray' className='likebutton' onClick={() => handleCommentLike(comment._id)}>
-                {comment.likes.length} <ThumbUpAltIcon />
+                {comment.likes.length} <ThumbUpAltIcon fontSize='xs' />
               </Button>
               
               {(user._id == (comment && comment.user._id)) && <Button size='xs' onClick={() => handleDeleteComment(comment._id)}>Delete Comment</Button>}

@@ -1,26 +1,47 @@
+/* CreatePost.css */
+
 .createpost-container {
-    text-align: left
-}
-
-h3 {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .createpost-container h3 {
+    margin-top: 0;
+  }
+  
+  .createpost-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .createpost-container input,
+  .createpost-container textarea {
     margin-bottom: 10px;
-}
-body > .title{
-    height: 40px;
-    width: 734px;
-    border-color: grey;
-    padding-left: 16px;
-
-}
-
-body > .post {
-    border-color: grey; 
-    margin-top: 10px;
-    height: 350px;
-}
-
-body > .button-post {
-    color: black;
-    align-items: right;
-    text-align: right
-}
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .createpost-container textarea {
+    resize: vertical;
+  }
+  
+  .createpost-container button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .createpost-container button:hover {
+    background-color: #0056b3;
+  }
+  
