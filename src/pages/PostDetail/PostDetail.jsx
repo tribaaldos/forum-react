@@ -24,7 +24,6 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     async function getPost() {
       const post = await postsAPI.getDetail(postId);
       setPost(post);
-      // setCommentLike(post && post.comments.likes.length)
       setLikeCount(post.likes.length)
       setUpdatedPost(post);
     }
@@ -87,21 +86,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
     </Button>
   );
 
-  // const getTimeDifference = () => {
-  //   const currentTime = new Date().getTime();
-  //   const postTime = new Date(commentId.createdAt).getTime();
-  //   const timeDifference = currentTime - postTime;
 
-  //   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  //   const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24)
-  //   if (days > 0) {
-  //     return `${days} day${days === 1 ? '' : 's'} ago`;
-  //   } else if (hours > 0) {
-  //     return `${hours} hour${hours === 1 ? '' : 's'} ago`;
-  //   } else {
-  //     return 'Less than an hour ago';
-  //   }
-  // };
 
   return (
     <>

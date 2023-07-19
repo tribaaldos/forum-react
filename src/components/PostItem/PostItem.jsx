@@ -36,7 +36,7 @@ const PostItem = ({ post, user, setPosts, posts }) => {
       return 'Less than an hour ago';
     }
   };
-  // console.log(post && post)
+  
   return (
     <div className="post-item">
       <ChakraProvider>
