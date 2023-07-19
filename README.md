@@ -2,13 +2,28 @@
 
 The Forum React App is a web application built using React that allows users to interact with a forum where they can post, view, and comment on various topics.
 
-click here to launch the app https://angel-forum-145779cf99a1.herokuapp.com/
+## Live Demo
 
-#screenshots
+You can access the live demo of the app by clicking [here](https://angel-forum-145779cf99a1.herokuapp.com/).
 
-Home Page ![62235D9C-7C5A-4022-9C4B-956EA0A6C080](https://github.com/tribaaldos/forum-react/assets/14943193/f9c55c25-e495-4ab4-9656-c5d057113160)
+## Screenshots
 
-Create a Post 
-![A6E7E8E9-5A59-41A2-9D3B-08CA7AC3ACEB](https://github.com/tribaaldos/forum-react/assets/14943193/89d81753-291a-4589-a2f0-4f5198b98366)
+### Home Page
+![Home Page](https://github.com/tribaaldos/forum-react/assets/14943193/f9c55c25-e495-4ab4-9656-c5d057113160)
 
-Post Detail ![7A1E5A6D-E93B-441D-BB39-6C111E83B66D](https://github.com/tribaaldos/forum-react/assets/14943193/cde6e75d-f1f7-4bb6-ad56-930896a84177)
+### Create a Post
+![Create a Post](https://github.com/tribaaldos/forum-react/assets/14943193/89d81753-291a-4589-a2f0-4f5198b98366)
+
+### Post Detail
+![Post Detail](https://github.com/tribaaldos/forum-react/assets/14943193/cde6e75d-f1f7-4bb6-ad56-930896a84177)
+
+## Features
+
+- User Registration and Login: Users can create accounts and log in to the forum.
+- Post Creation: Logged-in users can create new posts with titles and content.
+- Post Listing: Users can view a list of all the posts in the forum.
+- Post Details: Users can click on a post to view its details, including comments.
+- Commenting: Logged-in users can add comments to posts.
+- Sorting: Posts can be sorted by newest, oldest, and trending (based on likes).
+- Responsive Design:
+
