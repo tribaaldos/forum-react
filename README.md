@@ -5,10 +5,10 @@ The Forum React App is a web application built using React that allows users to 
 ## Features
 
 - User Registration and Login: Users can create accounts and log in to the forum.
-- Post Creation: Logged-in users can create new posts with titles and content.
+- Post Creation: users can create new posts with titles and content.
 - Post Listing: Users can view a list of all the posts in the forum.
 - Post Details: Users can click on a post to view its details, including comments.
-- Commenting: Logged-in users can add comments to posts.
+- Commenting:  users can add comments to posts.
 - Sorting: Posts can be sorted by newest, oldest, and trending (based on likes).
 - Responsive Design:
 
