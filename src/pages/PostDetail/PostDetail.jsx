@@ -158,7 +158,7 @@ export default function PostDetail({ setPosts, posts, user, setUser, history }) 
           
           ))}
           </div>
-          </ChakraProvider>
+          </ChakraProvider>wo
       </div>
     </>
   );
